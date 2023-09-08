@@ -1,4 +1,4 @@
-/* Animaciones */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -8,7 +8,6 @@
   }
 }
 
-/* Efectos 3D */
 .threed {
   transform-style: preserve-3d;
   transition: all 0.5s;
@@ -18,7 +17,6 @@
   transform: rotateX(10deg) rotateY(10deg);
 }
 
-/* Estilos */
 * {
   margin: 0;
   padding: 0;
@@ -171,4 +169,31 @@ div {
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 1rem;
+}
+
+.container#loading-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; 
+}
+
+.loading-icon .spinner {
+    border: 8px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 8px solid #333;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
