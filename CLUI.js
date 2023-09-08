@@ -4,7 +4,6 @@ function displayCsvInTable(csvContent) {
 
     const table = document.createElement('table');
 
-    // Add headers
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
     headers.forEach(header => {
@@ -15,7 +14,7 @@ function displayCsvInTable(csvContent) {
     thead.appendChild(headerRow);
     table.appendChild(thead);
 
-    // Add data rows
+
     const tbody = document.createElement('tbody');
     for (let i = 1; i < rows.length; i++) {
         const row = document.createElement('tr');
@@ -35,11 +34,10 @@ function displayCsvInTable(csvContent) {
     }
     table.appendChild(tbody);
 
-    // Clean up the UI
     const container = document.querySelector('#contactLists');
     container.innerHTML = '';
 
-    // Add back button
+
     const backButton = document.createElement('button');
     backButton.textContent = 'Back to contact lists';
     backButton.addEventListener('click', () => {
@@ -47,17 +45,15 @@ function displayCsvInTable(csvContent) {
     });
     container.appendChild(backButton);
 
-    // Add save button
+
     const saveButton = document.createElement('button');
     saveButton.textContent = 'Save';
-    saveButton.style.display = 'none'; // initially hidden
+    saveButton.style.display = 'none'; 
     saveButton.id = 'saveButton';
     saveButton.addEventListener('click', () => {
         // TODO: Implement saving logic
         alert('Save changes functionality is not implemented yet.');
     });
     container.appendChild(saveButton);
-
-    // Add the table
     container.appendChild(table);
 }
