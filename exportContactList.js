@@ -53,12 +53,16 @@ async function getFinalDownloadUrl(downloadId, platformClient) {
     }
 
     const data = await response.json();
-    const csvContent = await downloadExportedCsv(data.downloadUrl);
+    const csvContent = await downloadExportedCsv(data.downloadUrl, bearerToken);
     return csvContent;
 }
 
-async function downloadExportedCsv(uri) {
-    const response = await fetch(`/api/downloadCsv?uri=${encodeURIComponent(uri)}`);
+async function downloadExportedCsv(uri, bearerToken) {
+    const response = await fetch(`/api/downloadCsv?uri=${encodeURIComponent(uri)}`, {
+        headers: {
+            'Authorization': `Bearer ${bearerToken}`
+        }
+    });
     if (!response.ok) {
         throw new Error(`Failed to download CSV: ${response.statusText}`);
     }
