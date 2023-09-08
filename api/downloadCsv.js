@@ -6,13 +6,23 @@ module.exports = async (req, res) => {
     }
 
     const { uri } = req.query;
+    const bearerToken = req.headers.authorization;
 
     if (!uri) {
         return res.status(400).json({ error: 'URI is required' });
     }
 
+    if (!bearerToken) {
+        return res.status(401).json({ error: 'Authorization token is missing' });
+    }
+
     try {
-        const response = await fetch(uri);
+        const response = await fetch(uri, {
+            headers: {
+                'Authorization': bearerToken
+            }
+        });
+
         if (!response.ok) {
             throw new Error(`Failed to download the CSV: ${response.statusText}`);
         }
