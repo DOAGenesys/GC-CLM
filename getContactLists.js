@@ -1,7 +1,7 @@
 let currentPage = 1;
 let platformClientInstance;
 const contactListHandlers = {
-  fetchContactLists(platformClient, clientId, pageNumber = 1) {
+  fetchContactLists(platformClient, clientId, pageNumber = 1, name = '') {
     currentPage = pageNumber;
     platformClientInstance = platformClient;
     console.log('getContactLists called');
@@ -43,14 +43,7 @@ const contactListHandlers = {
       });
     }
 
-    function showLoadingScreen() {
-      const loadingScreen = document.createElement('div');
-      loadingScreen.textContent = 'Cargando registros de la contact list...';
-      document.body.appendChild(loadingScreen);
-    }
-
     function fetchContactListsFromApi(pageNumber) {
-      console.log('fetchContactListsFromApi');
       const apiInstance = new platformClient.OutboundApi();
       const pageSize = 25;
 
@@ -58,6 +51,10 @@ const contactListHandlers = {
         "pageSize": pageSize,
         "pageNumber": pageNumber
       };
+
+      if (name) {
+        opts.name = name;
+      }
 
       apiInstance.getOutboundContactlists(opts)
         .then(response => {
@@ -104,6 +101,18 @@ const contactListHandlers = {
 
     const showContactListsButton = document.querySelector('#showContactLists');
     const contactListsContainer = document.querySelector('#contactLists');
+    const searchButton = document.querySelector('#searchButton');
+    const searchInput = document.querySelector('#searchInput');
+    
+    searchButton.addEventListener('click', () => {
+      const searchTerm = searchInput.value;
+      if (searchTerm) {
+        contactListsContainer.innerHTML = '';
+        contactListHandlers.fetchContactLists(platformClient, clientId, 1, searchTerm);
+      } else {
+        alert('Please enter a search term.');
+      }
+    });
 
     showContactListsButton.addEventListener('click', () => {
       contactListsContainer.innerHTML = '';
@@ -115,6 +124,3 @@ const contactListHandlers = {
 window.addEventListener('DOMContentLoaded', () => {
   window.contactListHandlers = contactListHandlers;
 });
-
-
-
