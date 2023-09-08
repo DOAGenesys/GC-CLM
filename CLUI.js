@@ -1,4 +1,4 @@
-function displayCsvInTable(csvContent) {
+function displayCsvInTable(csvContent, contactListId) {
 
     const rows = csvContent.split('\n').map(row => row.split(',').map(cell => cell.replace(/"/g, '')));
     const headers = rows[0];
