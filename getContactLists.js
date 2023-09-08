@@ -39,8 +39,10 @@ const contactListHandlers = {
         radioButton.name = 'contactListSelection';
         
         radioButton.onclick = async () => {
-          const csvContent = await handleContactListSelection(platformClientInstance, list.id, clientId);
-          displayCsvInTable(csvContent, list.id, platformClientInstance);
+            showLoading(); 
+            const csvContent = await handleContactListSelection(platformClientInstance, list.id, clientId);
+            hideLoading(); 
+            displayCsvInTable(csvContent, list.id, platformClientInstance);
         };
         
         radioButtonCell.appendChild(radioButton);
