@@ -2,72 +2,77 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact List Management</title>
-  <script src="https://sdk-cdn.mypurecloud.com/javascript/latest/purecloud-platform-client-v2.min.js"></script>
-  <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.6.3/purecloud-client-app-sdk-de77761d.min.js"></script>
-  <script src="startGCSDKs.js"></script>
-  <script src="exportContactList.js"></script>
-  <script src="getContactLists.js"></script>
-  <script src="showContactListRecords.js"></script>
-  <script src="CLUI.js"></script>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact List Management</title>
+    <script src="https://sdk-cdn.mypurecloud.com/javascript/latest/purecloud-platform-client-v2.min.js"></script>
+    <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.6.3/purecloud-client-app-sdk-de77761d.min.js"></script>
+    <script src="startGCSDKs.js"></script>
+    <script src="exportContactList.js"></script>
+    <script src="getContactLists.js"></script>
+    <script src="showContactListRecords.js"></script>
+    <script src="CLUI.js"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <h1>Contact List Management</h1>
-  <button id="showContactLists">Display all contact lists</button>
-  <input type="text" id="searchInput" placeholder="Search contact list by name">
-  <button id="searchButton">Search by name</button>
-  <div id="contactLists">
-    <!-- Aquí se mostrarán las contact lists -->
-  </div>
-
-  <div id="loadingScreen" style="display:none;">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Loading contact list records</h5>
-        </div>
-        <div class="modal-body">
-          <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
-        </div>
-      </div>
+    <h1>Contact List Management</h1>
+    <button id="showContactLists">Display contact lists</button>
+    
+    <!-- Search Container -->
+    <div id="searchContainer">
+        <input type="text" id="searchInput" placeholder="Search contact list by name">
+        <button id="searchButton">Search by name</button>
     </div>
-  </div>
+    
+    <div id="contactLists">
+        <!-- Aquí se mostrarán las contact lists -->
+    </div>
 
-  <table id="contactListsTable">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Creation date</th>
-        <th>Division</th>
-        <th></th>
-        <!-- Columna vacía para radio buttons -->
-      </tr>
-    </thead>
-    <tbody id="contactListsTableBody">
-      <!-- Aquí se mostrarán las listas de contactos -->
-    </tbody>
-  </table>
+    <div id="loadingScreen" style="display:none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Loading contact list records</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  <div id="paginationButtons">
-    <button id="previousPageBtn" disabled>Previous</button>
-    <button id="nextPageBtn" disabled>Next</button>
-  </div>
+    <table id="contactListsTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Creation date</th>
+                <th>Division</th>
+                <th></th>
+                <!-- Columna vacía para radio buttons -->
+            </tr>
+        </thead>
+        <tbody id="contactListsTableBody">
+            <!-- Aquí se mostrarán las listas de contactos -->
+        </tbody>
+    </table>
 
-  <script>
-    const clientId = '4b980e28-662c-4bca-9b81-09d80bc304a3';
+    <div id="paginationButtons">
+        <button id="previousPageBtn" disabled>Previous</button>
+        <button id="nextPageBtn" disabled>Next</button>
+    </div>
 
-    startGCSDKs(clientId)
-      .then(platformClient => {
-        contactListHandlers.addShowContactListsButtonListener(platformClient, clientId);
-      });
-  </script>
+    <script>
+        const clientId = '4b980e28-662c-4bca-9b81-09d80bc304a3';
+
+        startGCSDKs(clientId)
+            .then(platformClient => {
+                contactListHandlers.addShowContactListsButtonListener(platformClient, clientId);
+            });
+    </script>
 </body>
 
 </html>
