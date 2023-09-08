@@ -65,19 +65,24 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
     saveButton.addEventListener('click', () => {
         editedRows.forEach(editedRow => {
             const cells = Array.from(editedRow.children);
-            const contactId = cells[headers.indexOf("inin-outbound-id")].textContent;
+            const contactId = cells[headers.indexOf("inin-outbound-id")].textContent.trim();
+            
+            let callableValue = cells[headers.indexOf("ContactCallable")].firstChild;
+            callableValue = (callableValue && callableValue.tagName === 'INPUT') ? callableValue.value : callableValue.textContent.trim();
+    
             let body = {
                 "contactListId": contactListId,
                 "data": {},
-                "callable": cells[headers.indexOf("ContactCallable")].firstChild.value === "1"
+                "callable": callableValue === "1"
             };
-
+    
             cells.forEach((cell, index) => {
                 if (index !== headers.indexOf("inin-outbound-id") && index !== headers.indexOf("ContactCallable")) {
-                    body.data[headers[index]] = cell.firstChild.value;
+                    let value = (cell.firstChild && cell.firstChild.tagName === 'INPUT') ? cell.firstChild.value : cell.textContent.trim();
+                    body.data[headers[index]] = value;
                 }
             });
-
+    
             apiInstance.putOutboundContactlistContact(contactListId, contactId, body)
                 .then((data) => {
                     console.log(`putOutboundContactlistContact success! data: ${JSON.stringify(data, null, 2)}`);
@@ -89,6 +94,7 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
         });
         alert('All changes saved!');
     });
+
     buttonsContainer.appendChild(saveButton);
 
     document.body.appendChild(buttonsContainer);
