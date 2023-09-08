@@ -17,7 +17,18 @@
 
 <body>
     <h1>Contact List Management</h1>
-    <button id="showContactLists">Display all contact lists</button>
+
+    <div id="actionsContainer">
+
+        <div id="showContactListContainer">
+            <button id="showContactLists">Display contact lists</button>
+        </div>
+        
+        <div id="searchContainer">
+            <input type="text" id="searchInput" placeholder="Search contact list by name">
+            <button id="searchButton">Search by name</button>
+        </div>
+    </div>
     
     <div id="loading-section" style="display: none;">
         <div class="loading-icon">
@@ -25,13 +36,8 @@
         </div>
     </div>
     
-    <div id="searchContainer">
-        <input type="text" id="searchInput" placeholder="Search contact list by name">
-        <button id="searchButton">Search by name</button>
-    </div>
-    
     <div id="contactLists">
-        <!-- Aquí se mostrarán las contact lists -->
+
     </div>
 
     <div id="loadingScreen" style="display:none;">
@@ -57,11 +63,11 @@
                 <th>Creation date</th>
                 <th>Division</th>
                 <th></th>
-                <!-- Columna vacía para radio buttons -->
+
             </tr>
         </thead>
         <tbody id="contactListsTableBody">
-            <!-- Aquí se mostrarán las listas de contactos -->
+
         </tbody>
     </table>
 
