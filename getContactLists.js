@@ -1,5 +1,16 @@
 let currentPage = 1;
 let platformClientInstance;
+
+const showLoading = () => {
+  const loadingSection = document.getElementById('loading-section');
+  loadingSection.style.display = 'block';
+};
+
+const hideLoading = () => {
+  const loadingSection = document.getElementById('loading-section');
+  loadingSection.style.display = 'none';
+};
+
 const contactListHandlers = {
   fetchContactLists(platformClient, clientId, pageNumber = 1, name = '') {
     currentPage = pageNumber;
@@ -7,6 +18,7 @@ const contactListHandlers = {
     console.log('getContactLists called');
 
     function displayContactLists(contactLists) {
+      hideLoading(); 
       const contactListsTableBody = document.querySelector('#contactListsTable tbody');
       contactListsTableBody.innerHTML = '';
 
@@ -42,6 +54,7 @@ const contactListHandlers = {
     }
 
     function fetchContactListsFromApi(pageNumber, name) {
+      showLoading();  
       const apiInstance = new platformClient.OutboundApi();
       const pageSize = 25;
 
@@ -67,7 +80,10 @@ const contactListHandlers = {
           displayContactLists(contactLists);
           contactListHandlers.updatePaginationButtons(totalPages);
         })
-        .catch(error => console.error('Error fetching contact lists:', error));
+        .catch(error => {
+          console.error('Error fetching contact lists:', error);
+          hideLoading(); 
+        });
     }
 
     fetchContactListsFromApi(pageNumber, name);
