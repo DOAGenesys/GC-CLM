@@ -7,7 +7,6 @@ const contactListHandlers = {
     console.log('getContactLists called');
 
     function displayContactLists(contactLists) {
-      console.log('displayContactLists', contactLists);
       const contactListsTableBody = document.querySelector('#contactListsTable tbody');
       contactListsTableBody.innerHTML = '';
 
@@ -33,23 +32,28 @@ const contactListHandlers = {
         };
         
         radioButtonCell.appendChild(radioButton);
-
         row.appendChild(idCell);
         row.appendChild(nameCell);
         row.appendChild(dateCreatedCell);
         row.appendChild(divisionCell);
-        row.appendChild(radioButtonCell); 
+        row.appendChild(radioButtonCell);
         contactListsTableBody.appendChild(row);
       });
     }
 
-    function fetchContactListsFromApi(pageNumber) {
+    function fetchContactListsFromApi(pageNumber, name) {
       const apiInstance = new platformClient.OutboundApi();
       const pageSize = 25;
 
       const opts = {
+        "includeImportStatus": false,
+        "includeSize": false,
         "pageSize": pageSize,
-        "pageNumber": pageNumber
+        "pageNumber": pageNumber,
+        "allowEmptyResult": false,
+        "filterType": "Prefix",
+        "sortBy": "name",
+        "sortOrder": "a"
       };
 
       if (name) {
@@ -58,33 +62,23 @@ const contactListHandlers = {
 
       apiInstance.getOutboundContactlists(opts)
         .then(response => {
-          console.log('getOutboundContactlists response', response);
           const contactLists = response.entities;
           const totalPages = response.pageCount;
           displayContactLists(contactLists);
           contactListHandlers.updatePaginationButtons(totalPages);
         })
-        .catch(error => console.error('Error al cargar las contact lists:', error));
+        .catch(error => console.error('Error fetching contact lists:', error));
     }
 
-    fetchContactListsFromApi(pageNumber);
+    fetchContactListsFromApi(pageNumber, name);
   },
 
   updatePaginationButtons(totalPages) {
     const previousPageBtn = document.querySelector('#previousPageBtn');
     const nextPageBtn = document.querySelector('#nextPageBtn');
 
-    if (currentPage === 1) {
-      previousPageBtn.disabled = true;
-    } else {
-      previousPageBtn.disabled = false;
-    }
-
-    if (currentPage === totalPages) {
-      nextPageBtn.disabled = true;
-    } else {
-      nextPageBtn.disabled = false;
-    }
+    previousPageBtn.disabled = currentPage === 1;
+    nextPageBtn.disabled = currentPage === totalPages;
 
     previousPageBtn.onclick = () => {
       currentPage -= 1;
@@ -97,13 +91,11 @@ const contactListHandlers = {
   },
 
   addShowContactListsButtonListener(platformClient, clientId) {
-    console.log('addShowContactListsButtonListener called');
-
     const showContactListsButton = document.querySelector('#showContactLists');
     const contactListsContainer = document.querySelector('#contactLists');
     const searchButton = document.querySelector('#searchButton');
     const searchInput = document.querySelector('#searchInput');
-    
+
     searchButton.addEventListener('click', () => {
       const searchTerm = searchInput.value;
       if (searchTerm) {
