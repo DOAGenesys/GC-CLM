@@ -25,15 +25,31 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
         const row = document.createElement('tr');
         rows[i].forEach((cell, index) => {
             const td = document.createElement('td');
+
             if (headers[index] === 'inin-outbound-id' || index > headers.indexOf("ContactCallable")) {
                 td.textContent = cell;
             } else {
                 const input = document.createElement('input');
                 input.value = cell;
-                input.addEventListener('input', () => {
-                    document.getElementById('saveButton').style.display = 'block';
-                    editedRows.add(row);
-                });
+
+                if (headers[index] === "ContactCallable") {
+                    input.addEventListener('input', () => {
+                        const value = input.value.trim();
+                        if (value !== "1" && value !== "0") {
+                            alert("Invalid value for ContactCallable! Please enter only '1' or '0'.");
+                            input.value = cell;
+                        } else {
+                            document.getElementById('saveButton').style.display = 'block';
+                            editedRows.add(row);
+                        }
+                    });
+                } else {
+                    input.addEventListener('input', () => {
+                        document.getElementById('saveButton').style.display = 'block';
+                        editedRows.add(row);
+                    });
+                }
+                
                 td.appendChild(input);
             }
             row.appendChild(td);
