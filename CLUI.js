@@ -1,6 +1,8 @@
 function displayCsvInTable(csvContent) {
-    const rows = csvContent.trim().split('\n');
-    const headers = rows[0].split(',').map(header => header.replace(/^"|"$/g, ''));
+
+    const rows = csvContent.split('\n').map(row => row.split(',').map(cell => cell.replace(/"/g, '')));
+    const headers = rows[0];
+
 
     const table = document.createElement('table');
 
@@ -18,15 +20,17 @@ function displayCsvInTable(csvContent) {
     const tbody = document.createElement('tbody');
     for (let i = 1; i < rows.length; i++) {
         const row = document.createElement('tr');
-        const cells = rows[i].split(',').map(cell => cell.replace(/^"|"$/g, ''));
-        cells.forEach((cell, idx) => {
+        rows[i].forEach((cell, index) => {
             const td = document.createElement('td');
-            td.textContent = cell;
-            if (headers[idx] !== 'inin-outbound-id') {
-                td.contentEditable = "true";
-                td.addEventListener('input', () => {
-                    document.querySelector('#saveButton').style.display = 'inline-block';
+            if (headers[index] === 'inin-outbound-id') {
+                td.textContent = cell;
+            } else {
+                const input = document.createElement('input');
+                input.value = cell;
+                input.addEventListener('input', () => {
+                    document.getElementById('saveButton').style.display = 'block';
                 });
+                td.appendChild(input);
             }
             row.appendChild(td);
         });
@@ -34,26 +38,38 @@ function displayCsvInTable(csvContent) {
     }
     table.appendChild(tbody);
 
-    const container = document.querySelector('#contactLists');
-    container.innerHTML = '';
+    const bodyContent = document.body.children;
+    for (let i = bodyContent.length - 1; i >= 0; i--) {
+        if (bodyContent[i].tagName !== 'H1') {
+            document.body.removeChild(bodyContent[i]);
+        }
+    }
 
+
+    const buttonsContainer = document.createElement('div');
+    buttonsContainer.style.display = 'flex';
+    buttonsContainer.style.justifyContent = 'center';
+    buttonsContainer.style.gap = '10px';
 
     const backButton = document.createElement('button');
     backButton.textContent = 'Back to contact lists';
     backButton.addEventListener('click', () => {
         document.location.reload();
     });
-    container.appendChild(backButton);
+    buttonsContainer.appendChild(backButton);
 
 
     const saveButton = document.createElement('button');
     saveButton.textContent = 'Save';
-    saveButton.style.display = 'none'; 
+    saveButton.style.display = 'none';
     saveButton.id = 'saveButton';
     saveButton.addEventListener('click', () => {
         // TODO: Implement saving logic
         alert('Save changes functionality is not implemented yet.');
     });
-    container.appendChild(saveButton);
-    container.appendChild(table);
+    buttonsContainer.appendChild(saveButton);
+    
+
+    document.body.appendChild(buttonsContainer);
+    document.body.appendChild(table);
 }
