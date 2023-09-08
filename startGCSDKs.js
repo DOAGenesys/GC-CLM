@@ -21,7 +21,6 @@ function startGCSDKs(clientId) {
         gcHostOriginQueryParam: 'gcHostOrigin',
         gcTargetEnvQueryParam: 'gcTargetEnv'
       });
-      myClientApp.alerting.showToastPopup('Hello', 'Genesys Cloud');
       const region = myClientApp.gcEnvironment;
     });
 
