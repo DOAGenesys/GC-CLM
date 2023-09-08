@@ -38,36 +38,18 @@ function getDownloadUrl(platformClient, contactListId, clientId, tries = 0) {
 }
 
 async function getFinalDownloadUrl(downloadId) {
-  const url = `https://api.mypurecloud.ie/api/v2/downloads/${downloadId}`;
-  try {
-    const response = await fetch(url);
+    const response = await fetch(`/api/getDownloadUrl?downloadId=${downloadId}`);
     if (!response.ok) {
-      throw new Error(`Error al obtener la URL de descarga final: ${response.statusText}`);
+        throw new Error(`Failed to get download URL: ${response.statusText}`);
     }
     const data = await response.json();
-    console.log(`getDownload success! data: ${JSON.stringify(data, null, 2)}`);
-    console.log('Final download URL:', data.uri);
-    downloadExportedCsv(data.uri);
-  } catch (err) {
-    console.log("Error al obtener la URL de descarga final:");
-    console.error(err);
-  }
+    return data.downloadUrl;
 }
-
-
 
 async function downloadExportedCsv(uri) {
-  try {
-    const response = await fetch(uri);
+    const response = await fetch(`/api/downloadCsv?uri=${encodeURIComponent(uri)}`);
     if (!response.ok) {
-      throw new Error(`Error al descargar el archivo CSV: ${response.statusText}`);
+        throw new Error(`Failed to download CSV: ${response.statusText}`);
     }
-
-    const csvData = await response.text();
-    showContactListRecords(csvData);
-  } catch (error) {
-    console.error('Ha ocurrido un error:', error);
-  }
+    return await response.text();
 }
-
-
