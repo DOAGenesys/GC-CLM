@@ -23,34 +23,27 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
 
     for (let i = 1; i < rows.length; i++) {
         const row = document.createElement('tr');
-
         rows[i].forEach((cell, index) => {
             const td = document.createElement('td');
 
-            if (headers[index] === 'inin-outbound-id' || index > headers.indexOf("ContactCallable")) {
+            if (headers[index] === 'inin-outbound-id' || index >= headers.indexOf("ContactCallable")) {
                 td.textContent = cell;
             } else {
                 const input = document.createElement('input');
                 input.value = cell;
-
                 input.addEventListener('input', () => {
                     document.getElementById('saveButton').style.display = 'block';
                     editedRows.add(row);
                 });
-
                 td.appendChild(input);
             }
-
             row.appendChild(td);
         });
-
         tbody.appendChild(row);
     }
-
     table.appendChild(tbody);
 
     const bodyContent = document.body.children;
-
     for (let i = bodyContent.length - 1; i >= 0; i--) {
         if (bodyContent[i].tagName !== 'H1') {
             document.body.removeChild(bodyContent[i]);
@@ -71,42 +64,33 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
     saveButton.textContent = 'Save';
     saveButton.style.display = 'none';
     saveButton.id = 'saveButton';
-
     saveButton.addEventListener('click', () => {
         const promises = [];
-
         editedRows.forEach(editedRow => {
             const cells = Array.from(editedRow.children);
             const contactId = cells[headers.indexOf("inin-outbound-id")].textContent;
-
             let body = {
                 "contactListId": contactListId,
                 "data": {},
                 "callable": cells[headers.indexOf("ContactCallable")].firstChild.value === "1"
             };
-
             if (doubleId) {
                 body.id = contactId;
             }
-
             cells.forEach((cell, index) => {
                 const currentValue = cell.firstChild ? cell.firstChild.value : cell.textContent;
-
-                if (index !== headers.indexOf("inin-outbound-id") && index !== headers.indexOf("ContactCallable")) {
+                if (index !== headers.indexOf("inin-outbound-id") && index < headers.indexOf("ContactCallable")) {
                     body.data[headers[index]] = currentValue;
                 }
             });
-
             promises.push(apiInstance.putOutboundContactlistContact(contactListId, contactId, body));
         });
-
         Promise.all(promises).then(() => {
             alert('All changes saved!');
         }).catch(err => {
             console.error('Error while updating contacts:', err);
         });
     });
-
     buttonsContainer.appendChild(saveButton);
     document.body.appendChild(buttonsContainer);
     document.body.appendChild(table);
