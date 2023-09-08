@@ -16,7 +16,7 @@
 
 <body>
   <h1>Contact List Management</h1>
-  <button id="showContactLists">Mostrar contact lists</button>
+  <button id="showContactLists">Display contact lists</button>
   <div id="contactLists">
     <!-- Aquí se mostrarán las contact lists -->
   </div>
@@ -25,11 +25,11 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Cargando registros de la contact list</h5>
+          <h5 class="modal-title">Loading contact list records</h5>
         </div>
         <div class="modal-body">
           <div class="spinner-border" role="status">
-            <span class="sr-only">Cargando...</span>
+            <span class="sr-only">Loading...</span>
           </div>
         </div>
       </div>
@@ -40,9 +40,9 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Nombre</th>
-        <th>Fecha de creación</th>
-        <th>División</th>
+        <th>Name</th>
+        <th>Creation date</th>
+        <th>Division</th>
         <th></th>
         <!-- Columna vacía para radio buttons -->
       </tr>
@@ -53,8 +53,8 @@
   </table>
 
   <div id="paginationButtons">
-    <button id="previousPageBtn" disabled>Anterior</button>
-    <button id="nextPageBtn" disabled>Siguiente</button>
+    <button id="previousPageBtn" disabled>Previous</button>
+    <button id="nextPageBtn" disabled>Next</button>
   </div>
 
   <script>
