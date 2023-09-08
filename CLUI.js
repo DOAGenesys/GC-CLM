@@ -25,8 +25,7 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
         const row = document.createElement('tr');
         rows[i].forEach((cell, index) => {
             const td = document.createElement('td');
-
-            if (headers[index] === 'inin-outbound-id' || index >= headers.indexOf("ContactCallable")) {
+            if (headers[index] === 'inin-outbound-id' || index > headers.indexOf("ContactCallable")) {
                 td.textContent = cell;
             } else {
                 const input = document.createElement('input');
