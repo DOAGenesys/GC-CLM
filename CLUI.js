@@ -23,7 +23,6 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
 
     for (let i = 1; i < rows.length; i++) {
         const row = document.createElement('tr');
-        const originalValues = rows[i];
 
         rows[i].forEach((cell, index) => {
             const td = document.createElement('td');
@@ -36,7 +35,7 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
 
                 input.addEventListener('input', () => {
                     document.getElementById('saveButton').style.display = 'block';
-                    editedRows.add({row: row, original: originalValues});
+                    editedRows.add(row);
                 });
 
                 td.appendChild(input);
@@ -74,9 +73,7 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
     saveButton.id = 'saveButton';
 
     saveButton.addEventListener('click', () => {
-        editedRows.forEach(item => {
-            const editedRow = item.row;
-            const original = item.original;
+        editedRows.forEach(editedRow => {
             const cells = Array.from(editedRow.children);
             const contactId = cells[headers.indexOf("inin-outbound-id")].textContent;
 
@@ -93,7 +90,7 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
             cells.forEach((cell, index) => {
                 const currentValue = cell.firstChild ? cell.firstChild.value : cell.textContent;
 
-                if (index !== headers.indexOf("inin-outbound-id") && index !== headers.indexOf("ContactCallable") && original[index] !== currentValue) {
+                if (index !== headers.indexOf("inin-outbound-id") && index !== headers.indexOf("ContactCallable")) {
                     body.data[headers[index]] = currentValue;
                 }
             });
