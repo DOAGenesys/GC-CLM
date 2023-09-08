@@ -184,13 +184,13 @@ div {
     width: 100%;
 }
 
-.container#loading-section {
+#loading-section {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -198,13 +198,14 @@ div {
 }
 
 .loading-icon .spinner {
-    border: 8px solid rgba(255, 255, 255, 0.3);
+    border: 16px solid rgba(255, 255, 255, 0.3); 
     border-radius: 50%;
-    border-top: 8px solid #333;
-    width: 50px;
-    height: 50px;
+    border-top: 16px solid #333; 
+    width: 100px; 
+    height: 100px;
     animation: spin 1s linear infinite;
 }
+
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
