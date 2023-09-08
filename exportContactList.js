@@ -3,8 +3,10 @@ let csvData;
 
 async function handleContactListSelection(platformClient, contactListId, clientId) {
   selectedContactListId = contactListId;
-  return await initiateContactListExport(platformClient, contactListId, clientId);
+  const csvContent = await initiateContactListExport(platformClient, contactListId, clientId);
+  return csvContent;
 }
+
 
 async function initiateContactListExport(platformClient, contactListId, clientId) {
   const apiInstance = new platformClient.OutboundApi();
