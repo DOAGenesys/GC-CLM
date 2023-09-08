@@ -40,8 +40,8 @@ function startGCSDKs(clientId) {
         userDetails = data;
 
         myClientApp.alerting.showToastPopup(
-          `Hola ${userDetails.name}`,
-          'Bienvenido a contact list management');
+          `Hello ${userDetails.name}`,
+          'Welcome to contact list management!');
       })
       .then(() => {
         document.addEventListener('DOMContentLoaded', () => {
