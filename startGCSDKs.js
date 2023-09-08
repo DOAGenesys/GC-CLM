@@ -6,9 +6,9 @@ function startGCSDKs(clientId) {
     const qParamEnvironment = 'environment';
 
     let language = 'en-us';
-    let redirectUri = 'https://doailabs.github.io/GC-CLM';
+    let redirectUri = 'https://gc-clm-smxz.vercel.app';
     let userDetails = null;
-    let environment = "mypurecloud.de";
+    let environment = "mypurecloud.ie";
     assignConfiguration();
     console.log(`environment after addEventListener: ${environment}`);
     console.log(`language after addEventListener: ${language}`);
