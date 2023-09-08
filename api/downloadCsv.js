@@ -1,6 +1,10 @@
-const fetch = require('node-fetch');
+let fetch;
 
 module.exports = async (req, res) => {
+    if (!fetch) {
+        fetch = (await import('node-fetch')).default;
+    }
+
     const { uri } = req.query;
 
     if (!uri) {
