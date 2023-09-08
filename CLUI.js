@@ -78,7 +78,6 @@ function displayCsvInTable(csvContent, contactListId) {
                 }
             });
 
-            // API call to save the data
             apiInstance.putOutboundContactlistContact(contactListId, contactId, body)
                 .then((data) => {
                     console.log(`putOutboundContactlistContact success! data: ${JSON.stringify(data, null, 2)}`);
