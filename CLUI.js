@@ -1,5 +1,6 @@
 function displayCsvInTable(csvContent, contactListId) {
     const editedRows = new Set();
+    const apiInstance = new platformClient.OutboundApi();
 
     const rows = csvContent.split('\n').map(row => row.split(',').map(cell => cell.replace(/"/g, '')));
     const headers = rows[0];
@@ -66,7 +67,7 @@ function displayCsvInTable(csvContent, contactListId) {
             const cells = Array.from(editedRow.children);
             const contactId = cells[headers.indexOf("inin-outbound-id")].textContent;
             let body = {
-                "contactListId": contactListId,  
+                "contactListId": contactListId,
                 "data": {},
                 "callable": cells[headers.indexOf("ContactCallable")].firstChild.value === "1"
             };
@@ -77,9 +78,15 @@ function displayCsvInTable(csvContent, contactListId) {
                 }
             });
 
-            // Here, use the API call logic to save the data.
-            // NOTE: The logic for the actual API call has been omitted for brevity.
-
+            // API call to save the data
+            apiInstance.putOutboundContactlistContact(contactListId, contactId, body)
+                .then((data) => {
+                    console.log(`putOutboundContactlistContact success! data: ${JSON.stringify(data, null, 2)}`);
+                })
+                .catch((err) => {
+                    console.log("There was a failure calling putOutboundContactlistContact");
+                    console.error(err);
+                });
         });
         alert('All changes saved!');
     });
