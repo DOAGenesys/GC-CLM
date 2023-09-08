@@ -171,6 +171,19 @@ div {
     margin-bottom: 1rem;
 }
 
+#actionsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+#showContactListContainer {
+    text-align: center;
+    width: 100%;
+}
+
 .container#loading-section {
     position: fixed;
     top: 0;
