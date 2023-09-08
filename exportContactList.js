@@ -43,7 +43,8 @@ async function getFinalDownloadUrl(downloadId) {
         throw new Error(`Failed to get download URL: ${response.statusText}`);
     }
     const data = await response.json();
-    return data.downloadUrl;
+    const csvContent = await downloadExportedCsv(data.downloadUrl);
+    return csvContent;
 }
 
 async function downloadExportedCsv(uri) {
