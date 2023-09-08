@@ -1,4 +1,4 @@
-function displayCsvInTable(csvContent, contactListId) {
+function displayCsvInTable(csvContent, contactListId, platformClient) {
     const editedRows = new Set();
     const apiInstance = new platformClient.OutboundApi();
 
