@@ -38,10 +38,6 @@ function startGCSDKs(clientId) {
       .then(data => usersApi.getUsersMe())
       .then(data => {
         userDetails = data;
-
-        myClientApp.alerting.showToastPopup(
-          `Hello ${userDetails.name}`,
-          'Welcome to contact list management!');
       })
       .then(() => {
         document.addEventListener('DOMContentLoaded', () => {
