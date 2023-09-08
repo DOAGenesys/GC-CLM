@@ -41,12 +41,21 @@ async function getDownloadUrl(platformClient, contactListId, clientId, tries = 0
 }
 
 async function getFinalDownloadUrl(downloadId) {
-    const response = await fetch(`/api/getDownloadUrl?downloadId=${downloadId}`);
+    const bearerToken = platformClient.ApiClient.authData.accessToken;
+
+    const response = await fetch(`/api/getDownloadUrl?downloadId=${downloadId}`, {
+        headers: {
+            'Authorization': `Bearer ${bearerToken}`
+        }
+    });
+
     if (!response.ok) {
         throw new Error(`Failed to get download URL: ${response.statusText}`);
     }
+
     const data = await response.json();
-    return await downloadExportedCsv(data.downloadUrl);
+    const csvContent = await downloadExportedCsv(data.downloadUrl);
+    return csvContent;
 }
 
 async function downloadExportedCsv(uri) {
