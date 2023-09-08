@@ -6,7 +6,7 @@ function startGCSDKs(clientId) {
     const qParamEnvironment = 'environment';
 
     let language = 'en-us';
-    let redirectUri = 'https://gc-clm-smxz.vercel.app';
+    let redirectUri = 'https://gc-clm.vercel.app';
     let userDetails = null;
     let environment = "mypurecloud.ie";
     assignConfiguration();
