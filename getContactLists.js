@@ -53,7 +53,7 @@ const contactListHandlers = {
         "allowEmptyResult": false,
         "filterType": "Prefix",
         "sortBy": "name",
-        "sortOrder": "a"
+        "sortOrder": "ascending"
       };
 
       if (name) {
