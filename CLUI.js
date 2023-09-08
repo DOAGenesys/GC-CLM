@@ -73,6 +73,8 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
     saveButton.id = 'saveButton';
 
     saveButton.addEventListener('click', () => {
+        const promises = [];
+
         editedRows.forEach(editedRow => {
             const cells = Array.from(editedRow.children);
             const contactId = cells[headers.indexOf("inin-outbound-id")].textContent;
@@ -95,15 +97,14 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
                 }
             });
 
-            apiInstance.putOutboundContactlistContact(contactListId, contactId, body)
-                .then(data => console.log(`putOutboundContactlistContact success! data: ${JSON.stringify(data, null, 2)}`))
-                .catch(err => {
-                    console.log("There was a failure calling putOutboundContactlistContact");
-                    console.error(err);
-                });
+            promises.push(apiInstance.putOutboundContactlistContact(contactListId, contactId, body));
         });
 
-        alert('All changes saved!');
+        Promise.all(promises).then(() => {
+            alert('All changes saved!');
+        }).catch(err => {
+            console.error('Error while updating contacts:', err);
+        });
     });
 
     buttonsContainer.appendChild(saveButton);
