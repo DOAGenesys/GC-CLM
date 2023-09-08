@@ -32,7 +32,7 @@ async function getDownloadUrl(platformClient, contactListId, clientId, tries = 0
     console.log(`getOutboundContactlistExport success! data: ${JSON.stringify(data, null, 2)}`);
     console.log('Download URL recuperada:', data.uri);
     const downloadId = data.uri.split('/').pop();
-    return await getFinalDownloadUrl(downloadId);
+    return await getFinalDownloadUrl(downloadId, platformClient);
   } catch (err) {
     console.log("Ha habido un fallo recuperando la URL de exportación");
     console.error(err);
@@ -40,9 +40,8 @@ async function getDownloadUrl(platformClient, contactListId, clientId, tries = 0
   }
 }
 
-async function getFinalDownloadUrl(downloadId) {
+async function getFinalDownloadUrl(downloadId, platformClient) {
     const bearerToken = platformClient.ApiClient.authData.accessToken;
-
     const response = await fetch(`/api/getDownloadUrl?downloadId=${downloadId}`, {
         headers: {
             'Authorization': `Bearer ${bearerToken}`
