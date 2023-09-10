@@ -94,7 +94,7 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
 
     const bodyContent = document.body.children;
     for (let i = bodyContent.length - 1; i >= 0; i--) {
-        if (bodyContent[i].tagName !== 'H1') {
+        if (bodyContent[i].tagName !== 'H1' && bodyContent[i].id !== 'contactListDetailsSearchContainer') {
             document.body.removeChild(bodyContent[i]);
         }
     }
