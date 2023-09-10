@@ -66,19 +66,15 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
     contactListSearchContainer.style.display = 'block';
 
     contactListSearchButton.addEventListener('click', () => {
-        const searchTerm = contactListDetailsSearchInput.value.toLowerCase();
+        const searchTerm = contactListSearchInput.value.toLowerCase();
         if (!searchTerm) {
             alert('Please enter a search term.');
             return;
         }
-	    
+    
         for (let row of tbody.children) {
-            const rowText = row.textContent.toLowerCase();
-            if (rowText.includes(searchTerm)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
+            let rowContainsTerm = Array.from(row.children).some(cell => cell.textContent.toLowerCase().includes(searchTerm));
+            row.style.display = rowContainsTerm ? '' : 'none';
         }
 
         resetSearchButton.style.display = 'inline-block';
