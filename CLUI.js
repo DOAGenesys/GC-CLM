@@ -133,16 +133,26 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
 }
 
 function updateKPIs(rows) {
-    const totalRecords = rows.length - 1;
-    const uncallableRecords = rows.slice(1).filter(row => row[row.indexOf("ContactCallable")] === "0").length;
-    const callableRecords = totalRecords - uncallableRecords;
+    let totalRecords = rows.length - 1;
+    let callableRecords = 0;
+    let uncallableRecords = 0;
 
-    const uncallablePercentage = ((uncallableRecords / totalRecords) * 100).toFixed(2);
-    const callablePercentage = ((callableRecords / totalRecords) * 100).toFixed(2);
+    for (let i = 1; i < rows.length; i++) {
+        const contactCallableValue = rows[i][headers.indexOf("ContactCallable")];
+        if (contactCallableValue === "1") {
+            callableRecords++;
+        } else if (contactCallableValue === "0") {
+            uncallableRecords++;
+        }
+    }
 
     document.getElementById('totalRecords').textContent = totalRecords;
     document.getElementById('uncallableRecords').textContent = uncallableRecords;
     document.getElementById('callableRecords').textContent = callableRecords;
-    document.getElementById('uncallablePercentage').textContent = uncallablePercentage + '%';
-    document.getElementById('callablePercentage').textContent = callablePercentage + '%';
+
+    const uncallablePercentage = ((uncallableRecords / totalRecords) * 100).toFixed(2) + '%';
+    const callablePercentage = ((callableRecords / totalRecords) * 100).toFixed(2) + '%';
+
+    document.getElementById('uncallablePercentage').textContent = uncallablePercentage;
+    document.getElementById('callablePercentage').textContent = callablePercentage;
 }
