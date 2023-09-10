@@ -58,11 +58,12 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
     }
     table.appendChild(tbody);
 
-    const contactListSearchInput = document.getElementById('contactListSearchInput');
-    const contactListSearchButton = document.getElementById('contactListSearchButton');
-    const resetSearchButton = document.getElementById('resetSearchButton');
-    const contactListSearchContainer = document.getElementById('contactListSearchContainer');
-    contactListSearchContainer.style.display = 'block'; // Show the search container
+    const contactListSearchInput = document.getElementById('contactListDetailsSearchInput');
+    const contactListSearchButton = document.getElementById('contactListDetailsSearchButton');
+    const resetSearchButton = document.getElementById('resetContactListDetailsSearchButton');
+    const contactListSearchContainer = document.getElementById('contactListDetailsSearchContainer');
+
+    contactListSearchContainer.style.display = 'block';
 
     contactListSearchButton.addEventListener('click', () => {
         const searchTerm = contactListSearchInput.value.toLowerCase();
