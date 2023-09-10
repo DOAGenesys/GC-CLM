@@ -58,6 +58,39 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
     }
     table.appendChild(tbody);
 
+    const contactListSearchInput = document.getElementById('contactListSearchInput');
+    const contactListSearchButton = document.getElementById('contactListSearchButton');
+    const resetSearchButton = document.getElementById('resetSearchButton');
+    const contactListSearchContainer = document.getElementById('contactListSearchContainer');
+    contactListSearchContainer.style.display = 'block'; // Show the search container
+
+    contactListSearchButton.addEventListener('click', () => {
+        const searchTerm = contactListSearchInput.value.toLowerCase();
+        if (!searchTerm) {
+            alert('Please enter a search term.');
+            return;
+        }
+	    
+        for (let row of tbody.children) {
+            const rowText = row.textContent.toLowerCase();
+            if (rowText.includes(searchTerm)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        }
+
+        resetSearchButton.style.display = 'inline-block';
+    });
+
+    resetSearchButton.addEventListener('click', () => {
+        for (let row of tbody.children) {
+            row.style.display = '';
+        }
+        contactListSearchInput.value = ''; 
+        resetSearchButton.style.display = 'none';
+    });
+
     const bodyContent = document.body.children;
     for (let i = bodyContent.length - 1; i >= 0; i--) {
         if (bodyContent[i].tagName !== 'H1') {
