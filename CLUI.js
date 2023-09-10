@@ -142,6 +142,7 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
     });
 	
     buttonsContainer.appendChild(saveButton);
+    document.body.appendChild(buttonsContainer);
 
     const KPIContainer = document.createElement('div');
     KPIContainer.id = "KPIContainer";
@@ -158,11 +159,7 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
     callableRecordsDiv.innerHTML = "Callable Records: <span id='callableRecords'>0</span> (<span id='callablePercentage'>0%</span>)";
     KPIContainer.appendChild(callableRecordsDiv);
 
-	const stickyContainer = document.createElement('div');
-	stickyContainer.id = 'stickyContainer';
-	stickyContainer.appendChild(buttonsContainer);
-	stickyContainer.appendChild(KPIContainer);
-	document.body.appendChild(stickyContainer);
+    document.body.appendChild(KPIContainer);
 
     updateKPIs(rows);
 
