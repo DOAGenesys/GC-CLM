@@ -66,7 +66,7 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
     contactListSearchContainer.style.display = 'block';
 
     contactListSearchButton.addEventListener('click', () => {
-        const searchTerm = contactListSearchInput.value.toLowerCase();
+        const searchTerm = contactListDetailsSearchInput.value.toLowerCase();
         if (!searchTerm) {
             alert('Please enter a search term.');
             return;
