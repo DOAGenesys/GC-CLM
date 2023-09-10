@@ -18,15 +18,21 @@
 <body>
     <h1>Contact List Management</h1>
 
-    <div id="actionsContainer">
+    <!-- KPIs Header Section -->
+    <div id="kpi-header">
+        <div>Total records: <span id="totalRecords">0</span></div>
+        <div>Uncallable records: <span id="uncallableRecords">0</span> (<span id="uncallablePercentage">0</span>%)</div>
+        <div>Callable records: <span id="callableRecords">0</span> (<span id="callablePercentage">0</span>%)</div>
+    </div>
 
+    <div id="actionsContainer">
         <div id="showContactListContainer">
             <button id="showContactLists">Display contact lists</button>
         </div>
         
         <div id="searchContainer">
-            <input type="text" id="searchInput" placeholder="Search contact list by name">
-            <button id="searchButton">Search by name</button>
+            <input type="text" id="tableSearchInput" placeholder="Search contact list by name">
+            <button id="tableSearchButton">Search</button>
         </div>
     </div>
     
@@ -36,9 +42,7 @@
         </div>
     </div>
     
-    <div id="contactLists">
-
-    </div>
+    <div id="contactLists"></div>
 
     <div id="loadingScreen" style="display:none;">
         <div class="modal-dialog" role="document">
@@ -63,12 +67,9 @@
                 <th>Creation date</th>
                 <th>Division</th>
                 <th></th>
-
             </tr>
         </thead>
-        <tbody id="contactListsTableBody">
-
-        </tbody>
+        <tbody id="contactListsTableBody"></tbody>
     </table>
 
     <div id="paginationButtons">
