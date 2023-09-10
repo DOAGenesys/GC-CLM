@@ -65,20 +65,24 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
 
     contactListSearchContainer.style.display = 'block';
 
-    contactListSearchButton.addEventListener('click', () => {
-        const searchTerm = contactListSearchInput.value.toLowerCase();
-        if (!searchTerm) {
-            alert('Please enter a search term.');
-            return;
-        }
-    
-        for (let row of tbody.children) {
-            let rowContainsTerm = Array.from(row.children).some(cell => cell.textContent.toLowerCase().includes(searchTerm));
-            row.style.display = rowContainsTerm ? '' : 'none';
-        }
-
-        resetSearchButton.style.display = 'inline-block';
-    });
+	contactListSearchButton.addEventListener('click', () => {
+	    const searchTerm = contactListSearchInput.value.toLowerCase();
+	    if (!searchTerm) {
+	        alert('Please enter a search term.');
+	        return;
+	    }
+	
+	    for (let row of tbody.children) {
+	        let rowContainsTerm = Array.from(row.children).some(cell => {
+	            let cellText = cell.textContent.toLowerCase();
+	            let inputValue = cell.querySelector('input') ? cell.querySelector('input').value.toLowerCase() : null;
+	            return cellText.includes(searchTerm) || (inputValue && inputValue.includes(searchTerm));
+	        });
+	        row.style.display = rowContainsTerm ? '' : 'none';
+	    }
+	
+	    resetSearchButton.style.display = 'inline-block';
+	});
 
     resetSearchButton.addEventListener('click', () => {
         for (let row of tbody.children) {
