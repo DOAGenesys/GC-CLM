@@ -21,6 +21,16 @@
     font-weight: 700;
 }
 
+#stickyContainer {
+    position: sticky;
+    top: 4rem;
+    background-color: #f8f8f8; 
+    z-index: 998;
+    padding: 1rem 0;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
 .threed {
   transform-style: preserve-3d;
   transition: all 0.5s;
