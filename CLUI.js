@@ -2,7 +2,7 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
     const editedRows = new Set();
     const apiInstance = new platformClient.OutboundApi();
 
-    const rows = csvContent.split('\n').map(row => row.split(',').map(cell => cell.replace(/"/g, '')));
+    const rows = csvContent.split('\n').filter(row => row.trim() !== "").map(row => row.split(',').map(cell => cell.replace(/"/g, '')));
     const headers = rows[0];
     const doubleId = rows[1][headers.indexOf("inin-outbound-id")] === rows[1][headers.indexOf("id")];
 
@@ -106,10 +106,10 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
             console.error('Error while updating contacts:', err);
         });
     });
+	
     buttonsContainer.appendChild(saveButton);
     document.body.appendChild(buttonsContainer);
 
-    // Create KPIContainer
     const KPIContainer = document.createElement('div');
     KPIContainer.id = "KPIContainer";
 
@@ -132,27 +132,27 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
     document.body.appendChild(table);
 }
 
+
 function updateKPIs(rows) {
-    let totalRecords = rows.length - 1;
-    let callableRecords = 0;
-    let uncallableRecords = 0;
+    const contactCallableIndex = rows[0].indexOf("ContactCallable");
+    let callableCount = 0;
+    let uncallableCount = 0;
 
     for (let i = 1; i < rows.length; i++) {
-        const contactCallableValue = rows[i][headers.indexOf("ContactCallable")];
-        if (contactCallableValue === "1") {
-            callableRecords++;
-        } else if (contactCallableValue === "0") {
-            uncallableRecords++;
+        if (rows[i][contactCallableIndex] === "1") {
+            callableCount++;
+        } else if (rows[i][contactCallableIndex] === "0") {
+            uncallableCount++;
         }
     }
 
+    const totalRecords = rows.length - 1;
+    const callablePercentage = ((callableCount / totalRecords) * 100).toFixed(2);
+    const uncallablePercentage = ((uncallableCount / totalRecords) * 100).toFixed(2);
+
     document.getElementById('totalRecords').textContent = totalRecords;
-    document.getElementById('uncallableRecords').textContent = uncallableRecords;
-    document.getElementById('callableRecords').textContent = callableRecords;
-
-    const uncallablePercentage = ((uncallableRecords / totalRecords) * 100).toFixed(2) + '%';
-    const callablePercentage = ((callableRecords / totalRecords) * 100).toFixed(2) + '%';
-
-    document.getElementById('uncallablePercentage').textContent = uncallablePercentage;
-    document.getElementById('callablePercentage').textContent = callablePercentage;
+    document.getElementById('callableRecords').textContent = callableCount;
+    document.getElementById('uncallableRecords').textContent = uncallableCount;
+    document.getElementById('callablePercentage').textContent = `${callablePercentage}%`;
+    document.getElementById('uncallablePercentage').textContent = `${uncallablePercentage}%`;
 }
