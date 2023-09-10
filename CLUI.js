@@ -108,9 +108,28 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
     });
     buttonsContainer.appendChild(saveButton);
     document.body.appendChild(buttonsContainer);
-    document.body.appendChild(table);
+
+    // Create KPIContainer
+    const KPIContainer = document.createElement('div');
+    KPIContainer.id = "KPIContainer";
+
+    const totalRecordsDiv = document.createElement('div');
+    totalRecordsDiv.innerHTML = "Total Records: <span id='totalRecords'>0</span>";
+    KPIContainer.appendChild(totalRecordsDiv);
+
+    const uncallableRecordsDiv = document.createElement('div');
+    uncallableRecordsDiv.innerHTML = "Uncallable Records: <span id='uncallableRecords'>0</span> (<span id='uncallablePercentage'>0%</span>)";
+    KPIContainer.appendChild(uncallableRecordsDiv);
+
+    const callableRecordsDiv = document.createElement('div');
+    callableRecordsDiv.innerHTML = "Callable Records: <span id='callableRecords'>0</span> (<span id='callablePercentage'>0%</span>)";
+    KPIContainer.appendChild(callableRecordsDiv);
+
+    document.body.appendChild(KPIContainer);
 
     updateKPIs(rows);
+
+    document.body.appendChild(table);
 }
 
 function updateKPIs(rows) {
