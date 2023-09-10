@@ -110,39 +110,20 @@ function displayCsvInTable(csvContent, contactListId, platformClient) {
     document.body.appendChild(buttonsContainer);
     document.body.appendChild(table);
 
-    // Search Logic
-    const searchInput = document.getElementById('tableSearchInput');
-    const searchButton = document.getElementById('tableSearchButton');
-    
-    searchButton.addEventListener('click', function() {
-        const searchTerm = searchInput.value.toLowerCase();
-        tbody.childNodes.forEach(row => {
-            const cells = Array.from(row.children);
-            const cellMatches = cells.some(cell => {
-                return cell.textContent.toLowerCase().includes(searchTerm);
-            });
-            if (cellMatches) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    });
-
-    // Display KPIs
     updateKPIs(rows);
 }
 
 function updateKPIs(rows) {
-    const totalRecords = rows.length - 1; // Exclude header
-    const callableRecords = rows.filter(row => row[row.indexOf("ContactCallable")] === "1").length;
-    const uncallableRecords = totalRecords - callableRecords;
-    const callablePercentage = (callableRecords / totalRecords) * 100;
-    const uncallablePercentage = (uncallableRecords / totalRecords) * 100;
+    const totalRecords = rows.length - 1;
+    const uncallableRecords = rows.slice(1).filter(row => row[row.indexOf("ContactCallable")] === "0").length;
+    const callableRecords = totalRecords - uncallableRecords;
+
+    const uncallablePercentage = ((uncallableRecords / totalRecords) * 100).toFixed(2);
+    const callablePercentage = ((callableRecords / totalRecords) * 100).toFixed(2);
 
     document.getElementById('totalRecords').textContent = totalRecords;
-    document.getElementById('callableRecords').textContent = callableRecords;
-    document.getElementById('callablePercentage').textContent = callablePercentage.toFixed(2);
     document.getElementById('uncallableRecords').textContent = uncallableRecords;
-    document.getElementById('uncallablePercentage').textContent = uncallablePercentage.toFixed(2);
+    document.getElementById('callableRecords').textContent = callableRecords;
+    document.getElementById('uncallablePercentage').textContent = uncallablePercentage + '%';
+    document.getElementById('callablePercentage').textContent = callablePercentage + '%';
 }
