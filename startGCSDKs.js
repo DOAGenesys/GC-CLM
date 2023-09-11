@@ -1,7 +1,7 @@
 function startGCSDKs() {
     const clientId = window.GCclientId;
     const console = window.console;
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         const appName = 'Contact List Management';
         const qParamLanguage = 'langTag';
         const qParamGcHostOrigin = 'gcHostOrigin';
