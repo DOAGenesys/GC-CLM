@@ -99,11 +99,11 @@
             }
         
         function setWindowConfig(config) {
-                Object.keys(config).forEach(key => {
-                    window[key] = config[key];
-                });
-            }
-
+            Object.keys(config).forEach(key => {
+                window[key] = config[key];
+                console.log(`window.${key} =`, window[key]);
+            });
+        }
 
             async function start() {
                 try {
