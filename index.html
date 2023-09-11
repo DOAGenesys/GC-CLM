@@ -112,7 +112,7 @@
                     setWindowConfig(config);
                     startGCSDKs()
                         .then(platformClient => {
-                            contactListHandlers.addShowContactListsButtonListener(platformClient, clientId);
+                            contactListHandlers.addShowContactListsButtonListener(platformClient, window.clientId);
                         });
                     window.platformClient = platformClient;
                     
