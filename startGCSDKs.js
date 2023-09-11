@@ -7,7 +7,6 @@ function startGCSDKs() {
         const qParamGcHostOrigin = 'gcHostOrigin';
         const qParamEnvironment = 'gcTargetEnv';
         let language = '';  
-        let redirectUri = window.redirectUri;
         let userDetails = null;
         let gcHostOrigin = '';    
         assignConfiguration();
@@ -38,7 +37,7 @@ function startGCSDKs() {
         });
         client.setPersistSettings(true, appName);
         client.setEnvironment(window.environment);
-        client.loginImplicitGrant(clientId, redirectUri)
+        client.loginImplicitGrant(clientId, window.redirectUri)
             .then(data => usersApi.getUsersMe())
             .then(data => {   
                 userDetails = data;
