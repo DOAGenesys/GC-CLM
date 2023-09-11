@@ -110,6 +110,7 @@
                     await getConfig()
                     const config = await getConfig();
                     setWindowConfig(config);
+                    console.log('window.clientId: ', window.clientId);
                     startGCSDKs()
                         .then(platformClient => {
                             contactListHandlers.addShowContactListsButtonListener(platformClient, window.clientId);
