@@ -88,12 +88,40 @@
     </div>
 
     <script>
-        const clientId = '4b980e28-662c-4bca-9b81-09d80bc304a3';
+        function getConfig() {
+                return fetch('/api/getConfig')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Environment vars could not be retrieved');
+                        }
+                        return response.json();
+                    });
+            }
+        
+        function setWindowConfig(config) {
+                Object.keys(config).forEach(key => {
+                    window[key] = config[key];
+                });
+            }
 
-        startGCSDKs(clientId)
-            .then(platformClient => {
-                contactListHandlers.addShowContactListsButtonListener(platformClient, clientId);
-            });
+
+            async function start() {
+                try {
+                    await getConfig()
+                    const config = await getConfig();
+                    setWindowConfig(config);
+                    startGCSDKs()
+                        .then(platformClient => {
+                            contactListHandlers.addShowContactListsButtonListener(platformClient, clientId);
+                        });
+                    window.platformClient = platformClient;
+                    
+                } catch (error) {
+                    console.error('Error occurred:', error);
+                }
+            }
+
+            start();
     </script>
 </body>
 
