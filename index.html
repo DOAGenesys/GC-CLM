@@ -114,9 +114,9 @@
                     startGCSDKs()
                         .then(platformClient => {
                             contactListHandlers.addShowContactListsButtonListener(platformClient, window.clientId);
+                            window.platformClient = platformClient;
                         });
-                    window.platformClient = platformClient;
-                    
+                            
                 } catch (error) {
                     console.error('Error occurred:', error);
                 }
