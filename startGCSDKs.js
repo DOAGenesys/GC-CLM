@@ -17,6 +17,7 @@ function startGCSDKs() {
         parts.shift();
         window.environment = parts.join('.'); //example enviroment value = "mypurecloud.ie" 
         console.log('window.environment in startGCSDKs:', window.environment);
+        console.log('window.redirectURI in startGCSDKs:', window.redirectURI);
 
         const platformClient = require('platformClient');
         const client = platformClient.ApiClient.instance;
