@@ -1,5 +1,4 @@
 function startGCSDKs() {
-    const clientId = window.GCclientId;
     const console = window.console;
     return new Promise(async (resolve, reject) => {
         const appName = 'Contact List Management';
@@ -37,7 +36,7 @@ function startGCSDKs() {
         });
         client.setPersistSettings(true, appName);
         client.setEnvironment(window.environment);
-        client.loginImplicitGrant(clientId, window.redirectUri)
+        client.loginImplicitGrant(window.clientId, window.redirectUri)
             .then(data => usersApi.getUsersMe())
             .then(data => {   
                 userDetails = data;
