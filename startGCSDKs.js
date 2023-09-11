@@ -9,7 +9,7 @@ function startGCSDKs() {
         let language = '';  
         let userDetails = null;
         let gcHostOrigin = '';    
-        assignConfiguration();
+        await assignConfiguration();
 
         const hostName = new URL(gcHostOrigin).hostname;
         const parts = hostName.split('.');
@@ -64,7 +64,8 @@ function startGCSDKs() {
                 reject(err);
             });
 
-        function assignConfiguration() {
+    function assignConfiguration() {
+        return new Promise((resolve) => {
             let browser_url = new URL(window.location);
             let searchParams = new URLSearchParams(browser_url.search);
             if (searchParams.has(qParamLanguage)) {
@@ -97,7 +98,8 @@ function startGCSDKs() {
                 console.log(pair[0] + ': ' + pair[1]); 
             }
             console.log('Returning gcHostOrigin:', gcHostOrigin);
-            return gcHostOrigin;
-        }
-    });
+            resolve(gcHostOrigin);
+        });
+    }
+  });
 }
